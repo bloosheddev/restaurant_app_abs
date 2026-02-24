@@ -17,7 +17,9 @@ class ScheduleNotificationProvider extends ChangeNotifier {
 
   void scheduleDailyElevenAMNotification() {
     _notificationId += 1;
-    flutterNotificationService.scheduleDailyElevenAMNotification(id: 1);
+    flutterNotificationService.scheduleDailyElevenAMNotification(
+      id: _notificationId,
+    );
     print('set!');
   }
 
