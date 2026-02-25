@@ -6,7 +6,6 @@ class ScheduleNotificationProvider extends ChangeNotifier {
 
   ScheduleNotificationProvider(this.flutterNotificationService);
 
-  int _notificationId = 0;
   bool? _permission = false;
   bool? get permission => _permission;
 
@@ -16,11 +15,7 @@ class ScheduleNotificationProvider extends ChangeNotifier {
   }
 
   void scheduleDailyElevenAMNotification() {
-    _notificationId += 1;
-    flutterNotificationService.scheduleDailyElevenAMNotification(
-      id: _notificationId,
-    );
-    print('set!');
+    flutterNotificationService.scheduleDailyElevenAMNotification(id: 0);
   }
 
   Future<void> cancelNotification(int id) async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/models/settings.dart';
-import 'package:restaurant_app/provider/notification/schedule_notification_provider.dart';
+
 import 'package:restaurant_app/provider/settings/shared_preferences_provider.dart';
 import 'package:restaurant_app/provider/settings/state/darkmode_state_provider.dart';
 import 'package:restaurant_app/provider/settings/state/restaurant_notification_state_provider.dart';
@@ -66,25 +66,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               builder: (context, provider, child) {
                 final bool state = provider.restaurantNotificationState;
 
-                return Consumer<ScheduleNotificationProvider>(
-                  builder:
-                      (
-                        BuildContext context,
-                        ScheduleNotificationProvider value,
-                        Widget? child,
-                      ) {
-                        return SwitchListTile(
-                          title: Text('Restaurant Notification'),
-                          subtitle: Text('Enable lunch notification at 11:00'),
-                          value: state,
-                          onChanged: (value) {
-                            value = state;
-                            provider.restaurantNotificationState = !value;
+                return SwitchListTile(
+                  title: Text('Restaurant Notification'),
+                  subtitle: Text('Enable lunch notification at 11:00'),
+                  value: state,
+                  onChanged: (value) {
+                    value = state;
+                    provider.restaurantNotificationState = !value;
 
-                            saveSettings();
-                          },
-                        );
-                      },
+                    saveSettings();
+                  },
                 );
               },
             ),

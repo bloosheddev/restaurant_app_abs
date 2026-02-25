@@ -78,8 +78,8 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   void initState() {
-    super.initState();
     _requestPermission();
+    super.initState();
 
     final sharedPreferencesProvider = context.read<SharedPreferencesProvider>();
 
@@ -113,8 +113,14 @@ class _MainAppState extends State<MainApp> {
             child,
           ) {
             final bool isDarkMode = darkModeProvider.darkModeState;
+            final bool isNotificationEnable =
+                restaurantNotificationStateProvider.restaurantNotificationState;
 
-            setNotificationSchedule();
+            if (isNotificationEnable) {
+              setNotificationSchedule();
+            } else {
+              cancelNotificationSchedule();
+            }
 
             return MaterialApp(
               debugShowCheckedModeBanner: false,
@@ -150,19 +156,13 @@ class _MainAppState extends State<MainApp> {
   }
 
   void setNotificationSchedule() async {
+    await _scheduleDailyElevenAMNotification();
+  }
+
+  void cancelNotificationSchedule() async {
     final localNotificationProvider = context
         .read<ScheduleNotificationProvider>();
-    final restaurantNotificationState = context
-        .read<RestaurantNotificationStateProvider>();
-    int notificationId = 0;
-
-    if (restaurantNotificationState.restaurantNotificationState == true) {
-      print('enabled!');
-      return await _scheduleDailyElevenAMNotification();
-    } else {
-      print('disable');
-      return localNotificationProvider.cancelNotification(1);
-    }
+    localNotificationProvider.cancelNotification(0);
   }
 
   Future<void> _scheduleDailyElevenAMNotification() async {

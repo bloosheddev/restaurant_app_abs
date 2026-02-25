@@ -19,7 +19,7 @@ class RestaurantListProvider extends ChangeNotifier {
       final result = await _apiServices.getRestaurantList();
 
       if (result.error) {
-        _resultState = RestaurantListErrorState(result.message);
+        _resultState = RestaurantListErrorState("Failed to fetch API!");
         notifyListeners();
       } else {
         _resultState = RestaurantListLoadedState(result.restaurants);
